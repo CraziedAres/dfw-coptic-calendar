@@ -1,4 +1,4 @@
-export type SourceType = "ics" | "web" | "social";
+export type SourceType = "ics" | "stmary-json" | "web" | "social";
 
 export type ChurchSource = { type: SourceType; url: string };
 

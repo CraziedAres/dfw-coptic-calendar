@@ -27,7 +27,7 @@
     "lat": 32.911439, "lng": -97.150459,
     "website": "https://www.stmarydfw.org/",
     "sources": [
-      {"type": "web", "url": "https://www.stmarydfw.org/api/v1/controllers/CalendarSvc.php?byDate=true&count=60"},
+      {"type": "stmary-json", "url": "https://www.stmarydfw.org/api/v1/controllers/CalendarSvc.php?byDate=true&count=60"},
       {"type": "social", "url": "https://www.instagram.com/stmarydfw_/"}
     ],
     "liturgy_times": "Sunday Liturgy 6:30 AM (Arabic), 8:00 AM (English) · Wednesday & Saturday 8:30 AM · Saturday Vespers 4:30 PM"
