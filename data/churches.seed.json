@@ -78,7 +78,6 @@
     "lat": 32.634030, "lng": -97.118654,
     "website": "https://stgeorgearlington.org/",
     "sources": [
-      {"type": "web", "url": "https://stgeorgearlington.org/"},
       {"type": "social", "url": "https://www.facebook.com/stgeorgearlington"}
     ],
     "liturgy_times": "Sunday Holy Liturgy 8:30–11:30 AM"
@@ -105,9 +104,7 @@
     "city": "Fort Worth",
     "lat": 32.941155, "lng": -97.281480,
     "website": "https://www.stmeenadfw.org/",
-    "sources": [
-      {"type": "web", "url": "https://www.stmeenadfw.org/eventsgallery"}
-    ],
+    "sources": [],
     "liturgy_times": null
   },
   {
