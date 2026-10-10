@@ -1,7 +1,6 @@
 import "server-only";
 import ical, { type VEvent } from "node-ical";
 import type { IngestEvent } from "./ingest";
-import { centralToIso } from "./site";
 
 const WINDOW_DAYS = 42;
 
@@ -10,11 +9,12 @@ function iso(d: Date) {
 }
 
 /**
- * rrule returns "floating" dates for zoned events: the UTC fields hold the wall-clock time in the
- * rule's TZID. Re-anchor them in that zone; rules without a TZID are already real UTC instants.
+ * node-ical's rrule expansion comes back shifted by the *host's* UTC offset: correct instants on a
+ * UTC server (Vercel), but wall-clock-as-UTC on a machine set to Central. Undo the host offset so
+ * results are the same everywhere. Verified under TZ=UTC, America/Chicago and America/Los_Angeles.
  */
-function fromFloating(d: Date, tzid: string | undefined): Date {
-  return tzid ? new Date(centralToIso(d.toISOString().slice(0, 16), tzid)) : d;
+function fromHostShifted(d: Date): Date {
+  return new Date(d.getTime() + d.getTimezoneOffset() * 60_000);
 }
 
 /** Fetches an ICS feed and returns events in the next six weeks, with recurrences expanded. */
@@ -33,12 +33,11 @@ export async function fetchIcsEvents(url: string, churchSlug: string): Promise<I
     const description = typeof ev.description === "string" ? ev.description : null;
     const location = typeof ev.location === "string" ? ev.location : null;
 
-    const tzid = ev.rrule?.origOptions.tzid ?? undefined;
     const starts: Date[] = ev.rrule
       ? ev.rrule
           .between(from, to, true)
           .filter((d) => !isExcluded(ev, d))
-          .map((d) => (allDay ? d : fromFloating(d, tzid)))
+          .map((d) => (allDay ? d : fromHostShifted(d)))
       : ev.start >= from && ev.start < to
         ? [ev.start]
         : [];
