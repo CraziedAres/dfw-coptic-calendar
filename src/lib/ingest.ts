@@ -1,7 +1,7 @@
 import "server-only";
 import { z } from "zod";
 import { classify, isCategory } from "./categories";
-import { db } from "./db";
+import { db, dedupeKey } from "./db";
 import type { EventInput, EventOrigin } from "./types";
 
 /** Payload the cloud agent POSTs to /api/ingest. Documented for the agent in agent/ROUTINE.md. */
@@ -54,6 +54,15 @@ export async function ingest(events: IngestEvent[], origin: EventOrigin) {
     });
   }
 
-  const result = await db().upsertEvents(rows);
-  return { ...result, skipped: events.length - rows.length, unknown_churches: [...unknownChurches] };
+  // Feeds sometimes list the same event twice (e.g. on two of a church's calendars). Postgres rejects an
+  // upsert that touches one row twice, so keep the first of each church + title + day.
+  const unique = [...new Map(rows.reverse().map((r) => [dedupeKey(r), r])).values()].reverse();
+
+  const result = await db().upsertEvents(unique);
+  return {
+    ...result,
+    skipped: events.length - rows.length,
+    duplicates: rows.length - unique.length,
+    unknown_churches: [...unknownChurches],
+  };
 }
