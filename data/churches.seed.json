@@ -40,7 +40,8 @@
     "lat": 32.974629, "lng": -96.698902,
     "website": "https://www.stphilopateerdallas.org/",
     "sources": [
-      {"type": "web", "url": "https://www.stphilopateerdallas.org/"},
+      {"type": "web", "url": "https://www.stphilopateerdallas.org/",
+       "hint": "Follow the homepage link titled 'Last Sunday's Announcements & Weekly Service Schedule' (a Google Drive file). Download it with https://drive.google.com/uc?export=download&id=<FILE_ID>. It's a multi-page PDF. Flyers are often image-only pages, some in Arabic, so render any page with little text and read it as an image. Include only items with a specific date."},
       {"type": "social", "url": "https://www.facebook.com/stphilodallas/"}
     ],
     "liturgy_times": null
@@ -53,7 +54,8 @@
     "lat": 32.825250, "lng": -97.082349,
     "website": "https://www.stabanoub-dallas.org/",
     "sources": [
-      {"type": "web", "url": "https://www.stabanoub-dallas.org/monthly-schedule"},
+      {"type": "web", "url": "https://www.stabanoub-dallas.org/monthly-schedule",
+       "hint": "The month's schedule is a static.wixstatic.com image on this page. Ignore the round church logo. The file name changes every month, so find it on the page each run. Read it as an image. Purple text is the saint of the day, not an event."},
       {"type": "social", "url": "https://www.instagram.com/stabanoubyouth/"}
     ],
     "liturgy_times": "Sunday Liturgy 7:30 AM · Saturday Vespers & Midnight Praises 6:30 PM (see monthly schedule)"
@@ -90,7 +92,8 @@
     "website": "https://www.stpkvi-dfw.org/",
     "sources": [
       {"type": "ics", "url": "https://www.stpkvi-dfw.org/events/?ical=1"},
-      {"type": "web", "url": "https://www.stpkvi-dfw.org/calendar/"},
+      {"type": "web", "url": "https://www.stpkvi-dfw.org/calendar/",
+       "hint": "On this page, follow the PDF link matching wp-content/uploads/YYYY/MM/<month>-YYYY-calendar.pdf (e.g. october-2026-calendar.pdf). A new month's file appears around the 3rd. Also try next month's URL in the same pattern; a 404 means it isn't posted yet. Read the calendar from the rendered page image, not extracted text: text extraction misaligns the day columns."},
       {"type": "social", "url": "https://www.instagram.com/popekyrillosvi_dfw"}
     ],
     "liturgy_times": null
@@ -115,8 +118,10 @@
     "lat": 33.235017, "lng": -96.798247,
     "website": "https://stmarkdfw.org/",
     "sources": [
-      {"type": "web", "url": "https://stmarkdfw.org/wp-json/wp/v2/posts?categories=7&per_page=3"},
-      {"type": "web", "url": "https://stmarkdfw.org/wp-json/wp/v2/posts?categories=9&per_page=10"},
+      {"type": "web", "url": "https://stmarkdfw.org/wp-json/wp/v2/posts?categories=7&per_page=3",
+       "hint": "WordPress posts. Category 7 is weekly 'Week of …' service schedules; category 9 is special events. If the newest post is more than 14 days old, report the source as stale and extract nothing from it."},
+      {"type": "web", "url": "https://stmarkdfw.org/wp-json/wp/v2/posts?categories=9&per_page=10",
+       "hint": "WordPress posts. Category 7 is weekly 'Week of …' service schedules; category 9 is special events. If the newest post is more than 14 days old, report the source as stale and extract nothing from it."},
       {"type": "social", "url": "https://www.instagram.com/stmarkprosper/"}
     ],
     "liturgy_times": "Sunday Divine Liturgy 8:00 AM · Saturday Vespers 5:30 PM, Midnight Praises 7:00 PM"

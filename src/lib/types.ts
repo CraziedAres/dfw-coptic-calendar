@@ -1,6 +1,7 @@
 export type SourceType = "ics" | "stmary-json" | "web" | "social";
 
-export type ChurchSource = { type: SourceType; url: string };
+/** `hint` tells the weekly agent how to read a tricky source (see agent/ROUTINE.md). */
+export type ChurchSource = { type: SourceType; url: string; hint?: string };
 
 export type Church = {
   id: string;
