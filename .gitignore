@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local dev data
+/data/dev-db.json
+/data/outbox/
+!.env.example
