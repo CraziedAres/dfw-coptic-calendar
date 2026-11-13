@@ -6,7 +6,8 @@ import { db } from "@/lib/db";
 export async function GET() {
   const churches = await db().listChurches();
   return NextResponse.json({
-    churches: churches.map(({ slug, name, city, website, sources }) => ({ slug, name, city, website, sources })),
+    // liturgy_times tells the agent whether a church's regular liturgies already appear on its page.
+    churches: churches.map(({ slug, name, city, website, sources, liturgy_times }) => ({ slug, name, city, website, sources, liturgy_times })),
     categories: CATEGORIES.map(({ slug, label, group }) => ({ slug, label, group })),
   });
 }

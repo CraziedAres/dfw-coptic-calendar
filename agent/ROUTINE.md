@@ -24,9 +24,16 @@ Environment variables available to you: `SITE_URL` (e.g. https://dfwcoptic.org) 
    - Read calendar grids (PDF or image) from the rendered image; never infer days from extracted-text
      column positions.
    - Extract every **dated** event between today and 6 weeks from today (America/Chicago).
-   - Skip ordinary, recurring liturgy listings already shown as the church's liturgy times **unless** they
-     are tied to a feast or special occasion. We want meetings, feasts, retreats, youth/couples events,
-     Bible studies, vespers/Tasbeha, service days.
+   - Liturgies depend on the church's `liturgy_times` from `/api/churches`:
+     - **If `liturgy_times` is empty**, the calendar is the only place its liturgies appear, so include
+       every dated liturgy in the schedule (Divine Liturgy, Arabic/English liturgies, early-morning
+       liturgies), categorized `liturgy`. A church often has several on one day: give each a distinct
+       title, by language or as the schedule names them ("Divine Liturgy (Arabic)", "Divine Liturgy
+       (English)"), because events with the same title on the same day are merged into one.
+     - **If `liturgy_times` is set**, skip ordinary recurring liturgies it already covers, **unless** they
+       are tied to a feast or special occasion, or fall at a time `liturgy_times` doesn't list.
+   - Beyond liturgies, we want meetings, feasts, retreats, youth/couples events, Bible studies,
+     vespers/Tasbeha, service days.
    - Ignore `type: "social"` sources (Instagram/Facebook cannot be fetched reliably).
 3. For each event build:
    ```json
