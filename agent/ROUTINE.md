@@ -16,7 +16,12 @@ Environment variables available to you: `SITE_URL` (e.g. https://dfwcoptic.org) 
      and report the code, noting that the host may be blocked by the environment's network settings.
 1. `curl -s "$SITE_URL/api/churches"` → JSON with `churches` (each has `slug`, `name`, `sources`) and the
    allowed `categories` (slug + label + group).
-2. For every church, for every source with `type: "web"`:
+2. For every church with `type: "web"` sources, first run `curl -s "$SITE_URL/api/events?church=<slug>"` to
+   see the events already saved for it. Events are matched by church + title + day, so **when an event
+   you find is one already saved** (same day and start time, or clearly the same gathering) **reuse the
+   saved title exactly, character for character**, even if this week's schedule words it differently.
+   A reworded title is stored as a second copy of the same event. Then, for every source with
+   `type: "web"`:
    - If the source has a `hint`, follow it. Hints record how that particular site publishes its schedule.
    - Fetch it. Sources may be HTML pages, JSON APIs (e.g. a calendar service or WordPress
      `wp-json/wp/v2/posts`), or pages that link to a monthly PDF/image schedule — follow such links

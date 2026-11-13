@@ -16,6 +16,7 @@ export interface Store {
 
   listEvents(range: { from: Date; to: Date }): Promise<ChurchEvent[]>;
   upsertEvents(events: EventInput[]): Promise<{ inserted: number; updated: number }>;
+  deleteEvents(ids: string[]): Promise<number>;
 
   getSubscriberByToken(token: string): Promise<Subscriber | null>;
   saveSubscriber(input: { email: string; categories: string[]; church_ids: string[] }): Promise<Subscriber>;
@@ -70,6 +71,11 @@ class SupabaseStore implements Store {
     const existing = await this.run<{ dedupe_key: string }[]>(this.sb.from("events").select("dedupe_key").in("dedupe_key", keys));
     await this.run(this.sb.from("events").upsert(rows, { onConflict: "dedupe_key" }));
     return { inserted: rows.length - existing.length, updated: existing.length };
+  }
+  async deleteEvents(ids: string[]) {
+    if (!ids.length) return 0;
+    const rows = await this.run<{ id: string }[]>(this.sb.from("events").delete().in("id", ids).select("id"));
+    return rows.length;
   }
 
   getSubscriberByToken(token: string) {
@@ -168,6 +174,13 @@ class FileStore implements Store {
         }
       }
       return { inserted, updated };
+    });
+  }
+  deleteEvents(ids: string[]) {
+    return this.mutate((d) => {
+      const before = d.events.length;
+      d.events = d.events.filter((e) => !ids.includes(e.id));
+      return before - d.events.length;
     });
   }
 

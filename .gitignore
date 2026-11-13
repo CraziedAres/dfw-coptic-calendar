@@ -43,4 +43,5 @@ next-env.d.ts
 # local dev data
 /data/dev-db.json
 /data/outbox/
+/data/backups/
 !.env.example
